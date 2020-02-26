@@ -1,0 +1,233 @@
+﻿@using DocumentTracking.Models
+@{
+    ViewBag.Title = "Send";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Send</h2>
+
+<div class="bgc-white p-20 bd">
+    <div>
+        <table class="table">
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div style="float:left; width:70%;">
+                            <input type="text" name="CompanySendSearch" id="CompanySendSearch" value="" class="form-control" placeholder="Enter Company Name" />
+                        </div>
+                        <div style="display:inline-block">
+                            <button class="btn btn-default" id="CSearch">Search</button>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div style="float:left; width:70%;">
+                            <input type="text" name="IDSendSearch" id="IDSendSearch" value="" class="form-control" placeholder="Enter ID" />
+                        </div>
+                        <div style="display:inline-block">
+                            <button class="btn btn-default" id="ISearch">Search</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div id="FileList">
+
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div>
+                            <span class="sd">File Id: </span> <span id="prefID"></span><br />
+                            <span class="sd">Description: </span> <span id="desc"></span><br />
+                            <span class="sd">File Type: </span> <span id="fileType"></span><br />
+                            <span class="sd">Source: </span> <span id="source"></span><br />
+                            <span class="sd">Date Created: </span> <span id="dateCreated"></span><br />
+                            <span class="sd">Destination: </span> <span style="" id="unit">@Html.DropDownList("UnitId", (SelectList)ViewBag.UnitId, "---------- Please select -------------", htmlAttributes: new { @class = "form-control" })</span><br />
+                        </div>
+                    </div>
+                    <button class="btn btn-block btn-primary" id="SendMovement">Send</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<div>
+    <div class="mT-30">
+        <button hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btnsuccess">Launch demo modal</button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="max-width:350px;">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Notification</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div><div class="modal-body">
+                        <div style="font-size:120px; color:forestgreen" class="text-center">
+                            <i class="fa fa-check"></i>
+                            <br />
+                            <p style="font-size:50px!important;">Done</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1 hidden id="comfort"></h1>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#CompanySendSearch").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Documents/getName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Description, value: item.Description };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+
+
+        $("#SendMovement").click(function () {
+            var ut = $('#prefID').text();
+            var id = $('#UnitId').val();
+            var s = $('#comfort').text();
+            var sdd = $('#UnitId :selected').text();
+
+         
+
+            if (ut != "") {
+                if (sdd != "---------- Please select -------------") {
+
+                    $.ajax({
+                        url: "/Documents/Send",
+                        type: "POST",
+                        dataType: "json",
+                        data: { PrefID: ut, Unit: id },
+                        success: function () {
+                            //location.reload();
+                            $('#prefID').text("");
+                            $('#desc').text("");
+                            $('#fileType').text("");
+                            $('#source').text("");
+                            $('#dateCreated').text("");
+
+                            var link = document.getElementById(s);
+                            link.style.display = 'none'; //or
+                            link.style.visibility = 'hidden';
+                            //$('#'+s).attr("hidden")
+                            document.getElementById('btnsuccess').click();
+                            //$('#btnsuccess').click();
+                        }
+                    });
+
+                } else {
+                    alert("Please Select the Destination");
+                };
+
+            } else {
+                alert("Please select File");
+            }
+
+        });
+
+        $("#CSearch").click(function () {
+            var t = $("#CompanySendSearch").val();
+            $("#FileList").empty();
+            var b = 0;
+
+
+            $.ajax({
+                url: "/Documents/CompanySearch",
+                type: "POST",
+                dataType: "json",
+                data: { company: t },
+                success: function (data) {
+                    $.each(data, function (index) {
+                        //$("#FileList").empty();
+                        $("#FileList").append("<span class='getData'" + "id='sdf" + b + "'>" + data[index].PrefID + "</span><br/>");
+                        b = b + 1;
+                    });
+                }
+
+            });
+        });
+
+        $("#ISearch").click(function () {
+            var t = $("#IDSendSearch").val();
+            $.ajax({
+                url: "/Documents/IDSearch",
+                type: "POST",
+                dataType: "json",
+                data: { Id: t },
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        alert(i);
+                    };
+                }
+
+            })
+        });
+
+
+        $(document).on('click', '.getData', function () {
+            var fileId = $(this).text();
+            $('#comfort').text(event.target.id);
+            
+            $.ajax({
+                url: '/Documents/getData',
+                type: "POST",
+                dataType: "json",
+                data: { FileID: fileId },
+                success: function (data) {
+
+                    $('#prefID').text(data.PrefID);
+                    $('#desc').text(data.Description);
+                    $('#fileType').text(data.FileType);
+                    $('#source').text(data.Destination);
+                    $('#dateCreated').text(data.DateCreated);
+
+                }
+            })
+
+        });
+
+        getID();
+    });
+
+    function getID() {
+
+        $.ajax({
+            url: '/Documents/getFileID',
+            type: 'POST',
+            data: { unit: parseInt($('#UnitId option:selected').val()) },
+            success: function (data) {
+                $('#FileId').val(data);
+            }
+
+
+        })
+
+    };
+
+
+</script>

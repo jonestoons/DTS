@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Email Confirmed";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+
+}
+<style>
+    #Link{
+        color:deepskyblue!important;
+    }
+</style>
+<div id="main-wrapper">
+
+    <div class="unix-login">
+        <div class="container-fluid" style="background-color: gainsboro;">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="login-content card">
+                        <div class="login-form">
+                            <div class="text-center">
+                                <img src="~/Content/elaadmin/images/loginLogo.png" width="64" height="64" />
+                                <h2><strong>DOCUMENT MANAGEMENT SYSTEM</strong></h2>
+                                <h2 class="text-center">@ViewBag.Title.</h2>
+
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div style="font-size:20px;">
+                                <p class="text-center">
+                                    Thank you for confirming your email. 
+                                    <br />
+                                    <span> Please <span id="Link">@Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</span></span>
+                                </p>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

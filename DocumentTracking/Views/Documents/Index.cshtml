@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DocumentTracking.Models.DataModels.Document>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="bgc-white bd bdrs-3 p-20 mB-20">
+            @*<h4 class="c-grey-900 mB-20">Bootstrap Data Table</h4>*@
+            <table id="dataTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>File Type</th>
+                        <th>Unit</th>
+                        <th>File ID</th>
+                        <th>Description</th>
+                        <th>Date Created</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.FileType.Description)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Unit.Description)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FileId)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

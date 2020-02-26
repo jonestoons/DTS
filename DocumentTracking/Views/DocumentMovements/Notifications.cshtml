@@ -1,0 +1,60 @@
+﻿@model IEnumerable<DocumentTracking.Models.DataModels.DocumentMovement>
+@using DocumentTracking.Models
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Notifications</h2>
+
+
+
+<div class="bgc-white p-20 bd">
+   
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="not">
+                <div class="col-md-8">
+                    <h5>@item.Description.ToUpper(): <b>@item.PrefID</b> </h5>
+                    <p>
+                        <span><b>Date Created: </b></span>@item.DateCreated.ToString()<b>|</b>
+                        <span><b>File Type: </b></span>@MiscClass.getFileType(item.FileType)
+                        <br />
+                        <h6><b>From: </b></h6>
+                        @if (item.Destination != null)
+                        {
+                            @MiscClass.getUnit(Convert.ToInt32(item.Destination))
+                        }
+                    </p>
+                </div>
+                <div class="col-md-2">
+                    <a onclick="Outgoing(@item.Id); return false;" href="#" class="btn btn-success">Accept</a>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+    else
+    {
+        <div class="col-md-8">
+            <h2>You have no Notifications</h2>
+        </div>
+
+    }
+
+      </div>
+
+<script>
+    function Outgoing(ID) {
+        $.ajax({
+            url: '/DocumentMovements/Confirm',
+            type: 'POST',
+            data: { id: ID },
+            success: function () {
+                window.location.reload();
+            }
+        });
+    }
+</script>

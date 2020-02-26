@@ -1,0 +1,27 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+    <div class="bgc-white p-20 bd">
+
+        <hgroup>
+            <h1 class="text-error">Error.</h1>
+            <h2 class="text-error">An error occurred while processing your request.</h2>
+        </hgroup>
+
+        <div>
+            <h4>Source</h4>
+            <hr />
+            @Model.Exception.Source
+        </div>
+        <hr />
+        <div>
+            <h4>Message</h4>
+            <hr />
+            @Model.Exception.Message
+        </div>
+
+    </div>

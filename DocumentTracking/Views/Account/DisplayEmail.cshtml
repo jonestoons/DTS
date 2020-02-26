@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "DEMO purpose Email Link";
+}
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+
+}
+
+
+<div id="main-wrapper">
+
+    <div class="unix-login">
+        <div class="container-fluid" style="background-color: gainsboro;">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="login-content card">
+                        <div class="login-form">
+                            <div class="text-center">
+                                <img src="~/Content/elaadmin/images/loginLogo.png" width="64" height="64" />
+                                <h2><strong>DOCUMENT MANAGEMENT SYSTEM</strong></h2>
+                            </div>
+                            <br />
+                            <br />
+                            <p class="text-info text-center">
+                                <h4 class="text-info">Please check your email and confirm your email address.</h4>
+                            </p>
+                            <p class="text-info text-center">
+                                <h4 class="text-primary"><a href="@Url.Action("Login","Account")">Click here to Login</a></h4>
+                            </p>
+                            @*<p class="text-danger">
+                                For DEMO only: You can click this link to confirm the email: <a href="@ViewBag.Link">link</a>
+                                Please change this code to register an email service in IdentityConfig to send an email.
+                            </p>*@
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

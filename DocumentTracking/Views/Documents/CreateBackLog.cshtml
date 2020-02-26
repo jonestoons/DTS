@@ -1,0 +1,406 @@
+﻿@model DocumentTracking.Models.CreateSend
+@{
+    ViewBag.Title = "Backlog Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<style>
+    .not {
+        display: none;
+    }
+    /*.start-date{
+        border:solid!important;
+    }*/
+</style>
+
+<div class="bgc-white p-20 bd">
+    <h3>Create BackLog Document</h3>
+    <div>
+        @if (ViewBag.Err == 1)
+        {
+            <h4 style="color:red">Record Already Exist!</h4>
+        }
+        <div class="mT-30">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create Company</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Company</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="not" id="not">
+                                <span class="text-success">Saved Successfully!</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Description</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line ui-autocomplete-input" id="CompDescription" name="CompDescription" type="text" value="" autocomplete="off">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="createCompany();">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                @Html.Label("Desc", "Company", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "ODescription" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileTypeId, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("FileTypeId", null, htmlAttributes: new { @class = "form-control", @id = "OFileTypeId" })
+                    @Html.ValidationMessageFor(model => model.FileTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FileId, new { htmlAttributes = new { @class = "form-control", @id = "OFileId" } })
+                    @Html.ValidationMessageFor(model => model.FileId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                @Html.Label("Subj", "Subject", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @id = "OSubject", @autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2 fw-500" })
+                <div class="col-md-10">
+                    @*@Html.TextBoxFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @Html.EditorFor(m => m.DateCreated, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    @*<div class="timepicker-input input-icon form-group">
+    <div class="input-group">
+        <div class="input-group-addon bgc-white bd bdwR-0">
+            <i class="ti-calendar"></i>
+        </div>
+       <input type="text" class="form-control start-date" id="DateCreated" name="DateCreated" placeholder="Select Date" data-provide="datepicker" autocomplete = "off">
+                       @* @Html.TextBoxFor(x => x.DateCreated, "{dd-MM-yyyy-0}", new { @class = "form-control start-date", @placeholder = "Select Date", @autocomplete = "off" })
+                           
+                         </div>
+                        @*<div class=''>
+            <div class="form-group">
+                <div class='input-group date' id="DateCreated" name="DateCreated">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="ti-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+                    @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("UnitId", null, htmlAttributes: new { @class = "form-control", @onchange = "getID();", @id = "OUnitId" })
+                    @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+           
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-info" />
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sendModal">Create &amp; Send</button>
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+
+    <div>
+        <div class="mT-30">
+            <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Destination</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @*<div class="not" id="not">
+                                    <span class="text-success">Saved Successfully!</span>
+                                </div>*@
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Department</label>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("DeptID", null, htmlAttributes: new { @class = "form-control", @onchange = "getUnit();" })
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Unit</label>
+                                <div class="col-md-12">
+                                    <select id="units" class="form-control"></select>
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Date</label>
+                                <div class="col-md-12">
+                                    <div class="timepicker-input input-icon form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-addon bgc-white bd bdwR-0">
+                                                <i class="ti-calendar"></i>
+                                            </div>
+                                            <input type="text" class="form-control start-date" id="DateSend" name="DateSend" placeholder="Select Date" data-provide="datepicker" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="CreateSend">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div hidden>
+
+        @using (Html.BeginForm("CreateSendBackLog", "Documents", FormMethod.Post, new { @id = "CreateSendForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FileId, new { htmlAttributes = new { @class = "form-control", @id = "CFileId" } })
+                        @Html.ValidationMessageFor(model => model.FileId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    @Html.Label("Desc", "Description / Company", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "CDescription" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    @Html.Label("Subj", "Subject", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @id = "CSubject" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                        @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control", @id = "CDateCreated" } })
+                            @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("UnitId", null, htmlAttributes: new { @class = "form-control", @onchange = "getID();", @id = "CUnitId" })
+                        @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FileTypeId, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("FileTypeId", null, htmlAttributes: new { @class = "form-control", @id = "CFileTypeId" })
+                        @Html.ValidationMessageFor(model => model.FileTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateSend, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DateSend, new { htmlAttributes = new { @class = "form-control", @id = "CDateSend" } })
+                        @Html.ValidationMessageFor(model => model.DateSend, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <input type="text" name="Destination" id="Destination" value="" />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    @*<div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>*@
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#CreateSend").click(function () {
+            $("#CFileId").val($('#OFileId').val());
+            $("#CDescription").val($('#ODescription').val());
+            $("#CUnitId").val($('#OUnitId').val());
+            $("#CFileTypeId").val($('#OFileTypeId').val());
+            $("#CSubject").val($('#OSubject').val());
+            $("#Destination").val($('#units').val());
+            $("#CDateCreated").val($('#DateCreated').val());
+            $("#CDateSend").val($('#DateSend').val());
+           $("#CreateSendForm").submit();
+
+            //console.log($("#CFileId").val());
+            //console.log($("#CDescription").val());
+            //console.log($("#CUnitId").val());
+            //console.log($("#CFileTypeId").val());
+            //console.log($("#OSubject").val());
+            //console.log($("#Destination").val());
+            //console.log($("#DateCreated").val());
+
+
+        });
+
+        
+        getUnit();
+    });
+
+    function getUnit() {
+        var Dept = $('#DeptID').val();
+        //alert(Dept);
+        $.ajax({
+            url: '/Documents/getUnit',
+            type: 'POST',
+            data: { DeptId: Dept },
+            success: function (data) {
+                $('#units').empty();
+                for (var i = 0; i < data.length; i++) {
+                    $('#units').append("<option value='" + data[i].UnitId + "'>" + data[i].Description + "</option>");
+                };
+
+            }
+
+        })
+    }
+</script>
+
+<script type="text/javascript">
+
+    $('#OFileTypeId').change(function () {
+        var value = $('#OFileTypeId :selected').text();
+
+        if (value != 'FILE') {
+            $('#OFileId').attr('disabled', true);
+            $('#OFileId').empty();
+        } else {
+            $('#OFileId').removeAttr('disabled');
+
+        }
+        //$('#OFileId').removeAttr('disabled');
+    });
+
+    $(document).ready(function () {
+        //$('#DateCreated').datetimepicker();
+        $("#ODescription").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Documents/getName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Description, value: item.Description };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+        getID();
+    });
+
+    function createCompany() {
+        $.ajax({
+            url: '/Companies/CreateJSON',
+            type: 'POST',
+            data: { Description: $('#CompDescription').val() },
+            success: function (data) {
+                $("#not").removeClass("not");
+                setTimeout(function () {
+                    $("#not").addClass("not");
+                    $('#CompDescription').val("");
+                }, 2000);
+            }
+
+        })
+
+    };
+
+    function getID() {
+
+        $.ajax({
+            url: '/Documents/getFileID',
+            type: 'POST',
+            data: { unit: parseInt($('#UnitId option:selected').val() )},
+            success: function (data) {
+                $('#FileId').val(data);
+            }
+
+
+        })
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

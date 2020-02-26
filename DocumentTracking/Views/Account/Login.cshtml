@@ -1,0 +1,99 @@
+﻿@model DocumentTracking.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+
+}
+
+
+<div id="main-wrapper">
+
+    <div class="unix-login">
+        <div class="container-fluid" style="background-color: gainsboro;">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="login-content card">
+                        <div class="login-form">
+                            <div class="text-center">
+                                <img src="~/Content/elaadmin/images/loginLogo.png" width="64" height="64" />
+                                <h2><strong>DOCUMENT MANAGEMENT SYSTEM</strong></h2>
+                            </div>
+                            <h4><strong>LOGIN</strong></h4>
+                            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                            {
+
+
+                                <div class="col-lg-12 text-center">
+                                    <h3>Hello, <b>@HttpContext.Current.User.Identity.Name!</b></h3>
+                                    <h2><b>Goto Dashboard</b></h2>
+                                    <a href="@Url.Action("Index","Home")">
+                                        <i style="font-size:150px;color:blueviolet" class="fa fa-dashboard"></i>
+                                        <br />
+                                        <span>Click Here</span>
+                                    </a>
+
+                                </div>
+
+                            }
+                            else
+                            {
+                                using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div class="form-group">
+                                        <label>Email address</label>
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="pull-right">
+                                            <a href="@Url.Action("ForgotPassword","Account")">Forgot Password?</a>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Sign in</button>
+                                }
+                            }
+                            @*<form>
+                                    <div class="form-group">
+                                        <label>Email address</label>
+                                        <input type="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"> Remember Me
+                                        </label>
+                                        <label class="pull-right">
+                                            <a href="#">Forgotten Password?</a>
+                                        </label>
+
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">Sign in</button>
+                                    <div class="register-link m-t-15 text-center">
+                                        <p>Don't have account ? <a href="#"> Sign Up Here</a></p>
+                                    </div>
+                                </form>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

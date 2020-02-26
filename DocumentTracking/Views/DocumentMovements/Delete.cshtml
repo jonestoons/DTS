@@ -1,0 +1,113 @@
+﻿@model DocumentTracking.Models.DataModels.DocumentMovement
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DocumentMovement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PrefID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrefID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Source)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Source)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Linked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Linked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OldId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OldId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LinkDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<DocumentTracking.Models.DataModels.DocumentMovement>
+@using DocumentTracking.Models
+
+@{
+    ViewBag.Title = "FileMovement";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+}
+
+<h2>File Movement for @ViewBag.FileId</h2>
+
+<div class="bgc-white p-20 bd">
+
+    @foreach (var item in Model)
+    {
+        if (item.Type == Movement.Incoming)
+        {
+            <div>
+                <a href="#" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                    @*<div class="peer mR-15"><img class="w-3r bdrs-50p" src="../../../randomuser.me/api/portraits/men/1.jpg" alt=""></div>*@
+                    <div class="peer peer-greed">
+                        <div>
+                            <div class="peers jc-sb fxw-nw mB-5">
+                                <div class="peer"><h4 class="fw-500 mB-0 label-info">@item.Type</h4></div>
+                                <div class="peer"><small class="fsz-xs">@MiscClass.DateConversion(Convert.ToDateTime(item.DateCreated))</small></div>
+                            </div>
+                            <span class="c-grey-600 fsz-sm"><b>Description: @item.Description,  Status: @item.Status, Subject: @item.Subject, File Type: @MiscClass.getFileType(item.FileType)</b></span><br />
+                            <span class="c-grey-600 fsz-sm"><b>@MiscClass.getUnit(Convert.ToInt32(item.Destination))</b></span><br />
+                            <span class="c-grey-600 fsz-sm"><b>Date Created: @item.DateCreated.Value.ToShortDateString()</b></span><br />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+        else
+        {
+            <div>
+                <a href="#" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                    @*<div class="peer mR-15"><img class="w-3r bdrs-50p" src="../../../randomuser.me/api/portraits/men/1.jpg" alt=""></div>*@
+                    <div class="peer peer-greed">
+                        <div>
+                            <div class="peers jc-sb fxw-nw mB-5">
+                                <div class="peer"><h4 class="fw-500 mB-0 label-info">@item.Type</h4></div>
+                                <div class="peer"><small class="fsz-xs">@MiscClass.DateConversion(Convert.ToDateTime(item.DateCreated))</small></div>
+                            </div>
+                            <span class="c-grey-600 fsz-sm"><b>Description: @item.Description,  Status: @item.Status, Subject: @item.Subject, File Type: @MiscClass.getFileType(item.FileType)</b></span><br />
+                            <span class="c-grey-600 fsz-sm"><b>@MiscClass.getUnit(Convert.ToInt32(item.Destination))</b></span><br />
+                            <span class="c-grey-600 fsz-sm"><b>Date Created: @item.DateCreated.Value.ToShortDateString()</b></span><br />
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        }
+
+    }
+    
+
+</div>

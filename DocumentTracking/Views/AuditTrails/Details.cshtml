@@ -1,0 +1,67 @@
+﻿@model DocumentTracking.Models.DataModels.AuditTrail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AuditTrail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Action)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Action)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MainID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecordID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecordID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Module)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Module)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

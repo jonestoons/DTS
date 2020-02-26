@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DocumentTracking.Models.DataModels.DocumentMovement>
+
+@{
+    ViewBag.Title = "CompanyLists";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+@*<h2>CompanyLists</h2>*@
+<h2>File List for @ViewBag.Company</h2>
+
+
+<div class="bgc-white p-20 bd">
+
+    @foreach (var item in Model)
+    {
+        <div>
+            <a href="@Url.Action("FileMovement","DocumentMovements", new {FileId = @item.PrefID })" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                <h4 class="fw-500 mB-0 label-info">
+                    <span>@item.PrefID</span>
+                </h4>
+                @*<div class="peer mR-15"><img class="w-3r bdrs-50p" src="../../../randomuser.me/api/portraits/men/1.jpg" alt=""></div>*@
+                @*<a href="@Url.Action("FileMovement","DocumentMovements", new {FileId = @item.PrefID })"><span>@item.PrefID</span></a>*@
+                
+                @*<div class="peer peer-greed">
+                    <div>
+
+                        <div class="peers jc-sb fxw-nw mB-5">
+                            <div class="peer">
+                                <h4 class="fw-500 mB-0 label-info">
+                                    <a href="@Url.Action("FileMovement","DocumentMovements", new {FileId = @item.PrefID })"><span>@item.PrefID</span></a>
+                                </h4>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>*@
+            </a>
+        </div>
+    }
+</div>

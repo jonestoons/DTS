@@ -1,0 +1,61 @@
+﻿@model DocumentTracking.Models.DataModels.Document
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<div class="bgc-white p-20 bd">
+
+    <h2>Details</h2>
+
+    <div>
+        <h4>Document</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FileType.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FileType.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Unit.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Unit.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.FileId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FileId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    </div>

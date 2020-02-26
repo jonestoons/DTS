@@ -1,0 +1,187 @@
+﻿@model DocumentTracking.Models.HomeAnalytics
+@{
+    ViewBag.Title = "Home Page";
+
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="bgc-white p-20 bd">
+    <h4>Today</h4>
+    <div class="row gap-20">
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Document Created</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash">
+                                <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas>
+                            </span>
+                        </div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">@Model._TDC</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Incoming Documents</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash2"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
+                        </div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">@Model._TID</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div><div class="col-md-4">
+                <div class="layers bd bgc-white p-20">
+                    <div class="layer w-100 mB-10">
+                        <h6 class="lh-1">Outgoing Documents</h6>
+                    </div>
+                    <div class="layer w-100">
+                        <div class="peers ai-sb fxw-nw">
+                            <div class="peer peer-greed">
+                                <span id="sparklinedash3"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
+                            </div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">@Model._TOD</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="col-md-3">
+                    <div class="layers bd bgc-white p-20">
+                        <div class="layer w-100 mB-10">
+                            <h6 class="lh-1">Bounce Rate</h6>
+                        </div><div class="layer w-100">
+                            <div class="peers ai-sb fxw-nw"><div class="peer peer-greed"><span id="sparklinedash4"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span></div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span></div></div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+</div>
+<br />
+<div class="bgc-white p-20 bd">
+    <h4>Last 7 Days</h4>
+    <div class="row gap-20">
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Document Created</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash4">
+                                <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas>
+                            </span>
+                        </div>
+                        <div class="peer">
+                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">@Model._7DC</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Incoming Documents</h6>
+                </div><div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash5">
+                                <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas>
+                            </span>
+                        </div>
+                        <div class="peer">
+                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">@Model._7ID</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Outgoing Documets</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash6">
+                                <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas>
+                            </span>
+                        </div><div class="peer">
+                            <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">@Model._7OD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-3">
+                <div class="layers bd bgc-white p-20">
+                    <div class="layer w-100 mB-10">
+                        <h6 class="lh-1">Bounce Rate</h6>
+                    </div><div class="layer w-100">
+                        <div class="peers ai-sb fxw-nw"><div class="peer peer-greed"><span id="sparklinedash4"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span></div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span></div></div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+<br />
+<div class="bgc-white p-20 bd">
+    <h4>Last 30 Days</h4>
+    <div class="row gap-20">
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Document Created</h6>
+                </div>
+                <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash7">
+                                <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas>
+                            </span>
+                        </div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">@Model._30DC</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Incoming Documents</h6>
+                </div><div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <div class="peer peer-greed">
+                            <span id="sparklinedash8"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
+                        </div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">@Model._30ID</span></div>
+                    </div>
+                </div>
+            </div>
+        </div><div class="col-md-4">
+            <div class="layers bd bgc-white p-20">
+                <div class="layer w-100 mB-10">
+                    <h6 class="lh-1">Outgoing Documets</h6>
+                </div>
+                <div class="layer w-100"><div class="peers ai-sb fxw-nw">
+                    <div class="peer peer-greed"><span id="sparklinedash9">
+                        <canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;">
+                            </canvas></span></div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">@Model._30OD</span></div></div></div>
+            </div>
+        </div>
+        @*<div class="col-md-3">
+                <div class="layers bd bgc-white p-20">
+                    <div class="layer w-100 mB-10">
+                        <h6 class="lh-1">Bounce Rate</h6>
+                    </div><div class="layer w-100">
+                        <div class="peers ai-sb fxw-nw"><div class="peer peer-greed"><span id="sparklinedash4"><canvas width="45" height="20" style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span></div><div class="peer"><span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span></div></div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>

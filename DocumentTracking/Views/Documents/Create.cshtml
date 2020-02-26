@@ -1,0 +1,373 @@
+﻿@model DocumentTracking.Models.DataModels.Document
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<style>
+    .not{
+        display:none;
+    }
+</style>
+
+
+
+
+<div class="bgc-white p-20 bd">
+    <h3>Create Document</h3>
+    @*<div>
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addContact">
+            Add New Contact
+        </button>
+        <div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Are you sure you want to delete this contact?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="deleteNo" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-primary" id="deleteOk">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div>
+        <div class="mT-30">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create Company</button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Company</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="not" id="not">
+                                <span class="text-success">Saved Successfully!</span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Description</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line ui-autocomplete-input" id="CompDescription" name="CompDescription" type="text" value="" autocomplete="off">
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="createCompany();">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Desc", "Company", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "ODescription" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileTypeId, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("FileTypeId", null, htmlAttributes: new { @class = "form-control", @id = "OFileTypeId" })
+                    @Html.ValidationMessageFor(model => model.FileTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.FileId, new { htmlAttributes = new { @class = "form-control", @id="OFileId"} })
+                    @Html.ValidationMessageFor(model => model.FileId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                @Html.Label("Subj", "Subject", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @id = "OSubject" } })
+                    @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("UnitId", null, htmlAttributes: new { @class = "form-control", @onchange = "getID();", @id = "OUnitId"  })
+                    @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+          
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-info" />
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#sendModal">Create &amp; Send</button>
+
+                </div>
+            
+            </div>
+        </div>
+    }
+
+
+    <div>
+        <div class="mT-30">
+            <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Destination</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @*<div class="not" id="not">
+                                <span class="text-success">Saved Successfully!</span>
+                            </div>*@
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Department</label>
+                                <div class="col-md-12">
+                                    @Html.DropDownList("DeptID", null, htmlAttributes: new { @class = "form-control", @onchange = "getUnit();" })
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2" for="Description">Unit</label>
+                                <div class="col-md-12">
+                                    <select id="units" class="form-control">
+                                    </select>
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="CreateSend">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div hidden>
+
+       @using (Html.BeginForm("CreateSend", "Documents", FormMethod.Post, new { @id = "CreateSendForm" }))
+       {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FileId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FileId, new { htmlAttributes = new { @class = "form-control", @id = "CFileId" } })
+                        @Html.ValidationMessageFor(model => model.FileId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    @Html.Label("Desc", "Company", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @id = "CDescription" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    @Html.Label("Subj", "Subject", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control", @id = "CSubject" } })
+                        @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+                        @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UnitId, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("UnitId", null, htmlAttributes: new { @class = "form-control", @onchange = "getID();" , @id = "CUnitId" })
+                        @Html.ValidationMessageFor(model => model.UnitId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FileTypeId, "File Type", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("FileTypeId", null, htmlAttributes: new { @class = "form-control", @id = "CFileTypeId" })
+                        @Html.ValidationMessageFor(model => model.FileTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <input type="text" name="Destination" id="Destination" value="" />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    @*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#CreateSend").click(function () {
+            $("#CFileId").val($('#OFileId').val());
+            $("#CDescription").val($('#ODescription').val());
+            $("#CUnitId").val($('#OUnitId').val());
+            $("#CSubject").val($('#OSubject').val());
+            $("#CFileTypeId").val($('#OFileTypeId').val());
+            $("#Destination").val($('#units').val());
+            $("#CreateSendForm").submit();
+
+        });
+        
+
+        getUnit();
+    });
+
+    function getUnit() { 
+        var Dept = $('#DeptID').val();
+        //alert(Dept);
+        $.ajax({
+            url: '/Documents/getUnit',
+            type: 'POST',
+            data: { DeptId: Dept },
+            success: function (data) {
+                $('#units').empty();
+                for (var i = 0; i < data.length; i++) {
+                    $('#units').append("<option value='" + data[i].UnitId + "'>" + data[i].Description + "</option>");
+                };              
+
+            }
+
+        })
+    }
+</script>
+
+<script type="text/javascript">
+
+    $('#OFileTypeId').change(function () {
+        var value = $('#OFileTypeId :selected').text();
+
+        if (value != 'FILE') {
+            $('#OFileId').attr('disabled', true);
+        } else {
+        $('#OFileId').removeAttr('disabled');
+
+        }
+        //$('#OFileId').removeAttr('disabled');
+    });
+
+    $(document).ready(function () {
+
+        $("#ODescription").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Documents/getName",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Description, value: item.Description };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+
+        getID();
+    });
+
+    function createCompany() {
+        $.ajax({
+            url: '/Companies/CreateJSON',
+            type: 'POST',
+            data: { Description: $('#CompDescription').val() },
+            success: function (data) {
+                $("#not").removeClass("not");
+                setTimeout(function () {
+                    $("#not").addClass("not");
+                    $('#ODescription').val($('#CompDescription').val());
+                    $('#CompDescription').val("");
+                }, 2000);
+            }
+
+        })
+
+    };
+
+    function getID() {
+
+        $.ajax({
+            url: '/Documents/getFileID',
+            type: 'POST',
+            data: { unit: parseInt($('#UnitId option:selected').val() )},
+            success: function (data) {
+                $('#FileId').val(data);
+            }
+
+
+        })
+
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,159 @@
+﻿@model DocumentTracking.Models.Link
+
+@{
+    ViewBag.Title = "LinkFileID";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<style>
+    .detail {
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+<div>
+    <div class="mT-30">
+       
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Document Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="novis" class="visible">
+                            <div class="form-group">
+                                <label class="control-label col-md-4">File ID:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="FileIDs">Hello</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Subject:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="Subject">Hello</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Description:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="Description">Hello</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">File Type:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="FileType">Hello</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Created by:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="UserIDs">Hello</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-4">Date Created:</label>
+                                <div class="col-md-10">
+                                    <span class="detail" id="DateCreated">Hello</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="vis" class="not-visible">
+                            No details for the following File ID: 
+                            <br />
+                            <span id="fID" style="font-size:30px;font-style:oblique;">OS/2018/2</span>
+                            <br />Please recheck the File ID.
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bgc-white p-20 bd">
+    <h2>Convert to File</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.OldID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        @Html.EditorFor(model => model.OldID, new { htmlAttributes = new { @class = "form-control", @Id="OldID" } })
+                        <div class="input-group-append">
+                            <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal" onclick="getDocumentDetails($('#OldID').val());">Get Details</button>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.OldID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NewID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NewID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Convert" class="btn btn-info" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    function getDocumentDetails(fileID){
+        $.ajax({
+            url: '/Documents/GetDocumentDetails',
+            type: 'POST',
+            data: { FileID: fileID},
+            success: function (data) {
+                if (data == "Empty") {
+                    $("#vis").removeClass("visible");
+                    $("#vis").removeClass("not-visible");
+                    $("#vis").addClass("visible");
+
+                    $("#novis").removeClass("visible");
+                    $("#novis").removeClass("visible");
+                    $("#novis").addClass("not-visible");
+                    $("#fID").text(fileID);
+                } else {
+                    $("#novis").removeClass("visible");
+                    $("#novis").removeClass("not-visible");
+                    $("#novis").addClass("visible");
+
+                    $("#vis").removeClass("visible");
+                    $("#vis").removeClass("visible");
+                    $("#vis").addClass("not-visible");
+
+                    $("#FileIDs").text(data.FileId);
+                    $("#Subject").text(data.Subject);
+                    $("#Description").text(data.Description);
+                    $("#FileType").text(data.FileType);
+                    $("#DateCreated").text(data.DateCreated);
+                    $("#UserIDs").text(data.UserID);
+                    
+
+                } 
+            }                             
+                                          
+        })
+        //alert(fileID);
+    }
+</script>
