@@ -57,6 +57,28 @@ namespace DocumentTracking.Controllers
         }
 
         //
+        // GET: /Users/
+        [HttpGet]
+        public async Task<ActionResult> UserActivations(string Id)
+        {
+            var user = await UserManager.FindByIdAsync(Id);
+            user.EmailConfirmed = true;
+            user.isReset = false;
+
+            await UserManager.UpdateAsync(user);
+
+            return RedirectToAction("UserActivation");
+        }
+
+        
+        [HttpGet]
+        public async Task<ActionResult> UserActivation()
+        {
+            var user = await UserManager.Users.Where(x => x.EmailConfirmed == false && x.isReset == true).ToListAsync();
+            return View(user);
+        }
+
+        //
         // GET: /Users/Details/5
         [HttpGet]
         public async Task<ActionResult> Details(string id)

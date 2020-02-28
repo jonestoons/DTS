@@ -49,7 +49,7 @@
                     <div class="col-md-7">
                         <button id="generate" class="btn btn-primary" onclick="report()">Generate</button>
                         <div class="loader">
-                            <img id="loading-image" src="~/Content/adminator/assets/static/images/loader.gif" width="30px" height="30px" />
+                            <img id="loading-image" src="~/Content/adminator/assets/static/images/loader.gif" width="30" height="30" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -276,69 +276,76 @@
                 var e = $('#rangeCTL').val();
                 var f = $('#yearCTL').val();
 
-                $.ajax({
-                    url: "/Reports/Index",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Option: a, Role: b, Unit: c, Day: d, DateRange: e, Year: f },
-                    beforeSend: function() {
-                        $("loader").show();
-                        console.log('Ajax call started');
+                console.log(a);
+                //console.log(b);
+                console.log(c);
+                console.log(d);
+                console.log(e);
+                console.log(f);
 
-                    },
-                    success: function (data) {
-                        console.log('Ajax call ended');
+                //$.ajax({
+                //    url: "/Reports/Index",
+                //    type: "POST",
+                //    dataType: "json",
+                //    data: { Option: a, Role: b, Unit: c, Day: d, DateRange: e, Year: f },
+                //    beforeSend: function() {
+                //        $("loader").show();
+                //        console.log('Ajax call started');
 
-                        $(".loader").hide();
+                //    },
+                //    success: function (data) {
+                //        console.log('Ajax call ended');
+
+                //        $(".loader").hide();
              
-                        //console.log(data);
-                        $('#dCreate').text(data.docCreated);
-                        $('#dIncoming').text(data.docIncoming);
-                        $('#dOutgoing').text(data.docOutgoing);
-                        $('#unitName').text(data.Unit);
+                //        //console.log(data);
+                //        $('#dCreate').text(data.docCreated);
+                //        $('#dIncoming').text(data.docIncoming);
+                //        $('#dOutgoing').text(data.docOutgoing);
+                //        $('#unitName').text(data.Unit);
 
-                        $('table.sd').DataTable().clear().draw();
+                //        $('table.sd').DataTable().clear().draw();
 
-                        for (var i = 0; i < data.docCreatedList.length; i++) {
-                            //console.log(data.docCreatedList[i]);
-                            $('table#docTable').DataTable().row.add([
-                                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docCreatedList[i].FileId + '">' + data.docCreatedList[i].FileId + '</>',
-                                data.docCreatedList[i].Subject,
-                                data.docCreatedList[i].Description,
-                                data.docCreatedList[i].FileType,
-                                data.docCreatedList[i].DateCreated,
-                                data.docCreatedList[i].UserID
-                            ]).draw(false);
-                        }
-                        for (var i = 0; i < data.docIncomingList.length; i++) {
-                            $('table#IncomingTable').DataTable().row.add([
-                                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docIncomingList[i].FileId + '">' + data.docIncomingList[i].FileId + '</>',
-                                data.docIncomingList[i].Subject,
-                                data.docIncomingList[i].Description,
-                                data.docIncomingList[i].FileType,
-                                data.docIncomingList[i].Source,
-                                data.docIncomingList[i].Destination,
-                                data.docIncomingList[i].DateCreated,
-                                data.docIncomingList[i].UserID
-                            ]).draw(false);
-                        }
-                        for (var i = 0; i < data.docOutgoingList.length; i++) {
-                            $('table#OutgoingTable').DataTable().row.add([
-                                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docOutgoingList[i].FileId + '">' + data.docOutgoingList[i].FileId + '</>',
-                                data.docOutgoingList[i].Subject,
-                                data.docOutgoingList[i].Description,
-                                data.docOutgoingList[i].FileType,
-                                data.docOutgoingList[i].Source,
-                                data.docOutgoingList[i].Destination,
-                                data.docOutgoingList[i].DateCreated,
-                                data.docOutgoingList[i].UserID
-                            ]).draw(false);
-                        }
+                //        for (var i = 0; i < data.docCreatedList.length; i++) {
+                //            //console.log(data.docCreatedList[i]);
+                //            $('table#docTable').DataTable().row.add([
+                //                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docCreatedList[i].FileId + '">' + data.docCreatedList[i].FileId + '</>',
+                //                data.docCreatedList[i].Subject,
+                //                data.docCreatedList[i].Description,
+                //                data.docCreatedList[i].FileType,
+                //                data.docCreatedList[i].DateCreated,
+                //                data.docCreatedList[i].UserID
+                //            ]).draw(false);
+                //        }
+                //        for (var i = 0; i < data.docIncomingList.length; i++) {
+                //            $('table#IncomingTable').DataTable().row.add([
+                //                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docIncomingList[i].FileId + '">' + data.docIncomingList[i].FileId + '</>',
+                //                data.docIncomingList[i].Subject,
+                //                data.docIncomingList[i].Description,
+                //                data.docIncomingList[i].FileType,
+                //                data.docIncomingList[i].Source,
+                //                data.docIncomingList[i].Destination,
+                //                data.docIncomingList[i].DateCreated,
+                //                data.docIncomingList[i].UserID
+                //            ]).draw(false);
+                //        }
+                //        for (var i = 0; i < data.docOutgoingList.length; i++) {
+                //            $('table#OutgoingTable').DataTable().row.add([
+                //                '<a href="/DocumentMovements/FileMovement?FileId=' + data.docOutgoingList[i].FileId + '">' + data.docOutgoingList[i].FileId + '</>',
+                //                data.docOutgoingList[i].Subject,
+                //                data.docOutgoingList[i].Description,
+                //                data.docOutgoingList[i].FileType,
+                //                data.docOutgoingList[i].Source,
+                //                data.docOutgoingList[i].Destination,
+                //                data.docOutgoingList[i].DateCreated,
+                //                data.docOutgoingList[i].UserID
+                //            ]).draw(false);
+                //        }
                         
                         
 
-                    }
-                });
+                //    }
+                //});
             }
 
             function changeOption() {
@@ -576,6 +583,7 @@ else
                 </div>
             </div>
         </div>
+
     <script>
         $('input[name="rangeDate"]').daterangepicker({
             locale: {
@@ -588,7 +596,7 @@ else
         $(document).ready(function () {
             changeOption();
             $('table.sd').DataTable();
-            //$(".loader").hide();
+            $(".loader").hide();
 
         });
 

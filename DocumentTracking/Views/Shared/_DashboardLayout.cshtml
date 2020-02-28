@@ -6,7 +6,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="~/Content/elaadmin/images/favicon.png">
     <title>@ViewBag.Title - DMS</title>
     <link href="~/Content/adminator/style.css" rel="stylesheet">
-    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    @*<script src="~/Scripts/jquery-1.12.4.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
     <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
     @*<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />*@
@@ -168,6 +169,9 @@
                                 </li>
                                 <li>
                                     <a href="@Url.Action("Create", "UsersAdmin")">Create New</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("UserActivation", "UsersAdmin")">Activate User</a>
                                 </li>
 
                             </ul>
@@ -516,7 +520,7 @@
     <script type="text/javascript" src="~/Content/adminator/bundle.js"></script>
 
    @* @Scripts.Render("~/bundles/bootstrap")*@
-    @Scripts.Render("~/bundles/jqueryval")
+   @* @Scripts.Render("~/bundles/jqueryval")*@
 
     @RenderSection("scripts", required: false)
 </body>

@@ -63,5 +63,6 @@ namespace DocumentTracking.Models
             return new ApplicationDbContext();
         }
 
+        //public System.Data.Entity.DbSet<DocumentTracking.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
